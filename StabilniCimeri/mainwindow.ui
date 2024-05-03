@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pbPokreni">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>390</y>
+      <width>161</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Run algorithm</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbLoad">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>50</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load from file</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbLoadM">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>50</y>
+      <width>141</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load manually</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbNotification">
+    <property name="geometry">
+     <rect>
+      <x>133</x>
+      <y>338</y>
+      <width>541</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="teInput">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>160</y>
+      <width>331</width>
+      <height>181</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbLoadDone">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>270</y>
+      <width>95</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbClear">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>200</y>
+      <width>95</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbFormat">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>120</y>
+      <width>341</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Format: First enter n, then n preference lists</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
