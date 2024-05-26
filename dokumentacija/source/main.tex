@@ -178,6 +178,44 @@ I poslednja i finalna lema kaže:
 Faza dva redukcije se sprovodi sve dok postoji lista preferencije koja ima više od jednog elementa, ili dok se neka ne isprazni, što znači da ćemo potencijalno više puta tražiti sve ili ništa cikluse i vršiti redukcije listi preferencija.
 
 \newpage
+
+\section{Primer primene algoritma}
+
+U ovom poglavlju ćemo demonstrirati primenu algoritma na konkretnoj instanci problema. Liste preferencija sa kojima ćemo raditi se mogu naći na slici \ref{inst}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{instanca.png}
+    \caption{Instanca problema.}
+    \label{inst}
+\end{figure}
+
+U prvoj fazi algoritma šaljemo predloge redom kroz liste preferencija, dok ne dođe do prihvatanja. U tom momentu smo postali favorit osobi koja nas je prihvatila, pa je važno da pamtimo favorite za svaku osobu, zbog redukcije, kao i dokle smo stigli sa slanjem predloga u listi preferencija.
+\newline
+\textbf{Prva faza} - Krećemo od osobe 1, ona pita osobu 4 da budu partneri, i kako trenutno 4 nema favorita, pa on ne može ni biti bolje rangiran od 1, 4 prihvata predlog od 1, i njen favorit postaje 1. Kraće ćemo ovo zapisivati kao $1 - 4, f[4] = 1$, zbog kompaktnijeg zapisa kada naiđemo na suštinski isti korak. Dalje, $2 - 6, f[6] = 2$. Nakon toga, 3 pita 4, kako je favorit od 4 bolje rangiran od 3, u listi preferencija osobe 4, 4 odbija 3, i 3 nastavlja sa slanjem predloga kroz svoju listu, dakle 3 predlaže 5 uparivanje, i 5 prihvata, $f[5] = 3$. $4 - 2, f[2] = 4$. Sledi, $5 - 4, f[4] = 5$, ali kako je 4 već imala favorita, ona odbija prethodnog favorita, u ovom slučaju 1, i forsira 1 da nastavi sa slanjem predloga kroz svoju listu preferencija, što rezultuje sledećim korakom: $1 - 6, f[6] = 1$. Analogno prethodnom, 6 odbija 2, i sledi $2 - 3, f[3] = 2$. Kako smo niz odbijanja pokrenuli iz liste osobe broj 5, nastavljamo slanje predloga od sledeće osobe, odnosno 6, $6 - 5, f[5] = 6$. Kako niko nije odbijen od strane svih osoba, faza se završila tako što svako ima svog favorita, i sada možemo uraditi redukciju. Iz liste preferencija osobe $i$ možemo izbaciti sve one osobe koje su je odbile, kao i sve one koje su rangirane gore od njenog favorita, ali isto tako i svaku osobu $j$, u čijoj listi preferencija je osoba $i$ rangirana gore nego favorit osobe $j$.
+\newline
+Kod osobe 1 imamo da ju je odbila 4, pa nju izbacujemo. Takođe, $f[1] = 6$, pa možemo da izbacimo i 2, 5 i 3, tako da ostaje samo osoba 6 u listi.
+\newline
+Osobu 2 je odbila 6, pa nju izbacujemo, a kako joj je favorit 4, poslednja u listi, na taj način ne možemo više ništa da eliminišemo, ali pošto je $f[1] = 6$, i bolje je rangirana od 2, možemo još da uklonimo i 1, i tako ostaju 3, 5 i 4.
+\newline
+Dalje slično dobijamo da u listi osobe 3 ostaju 5 i 2, kod 4 ostaju 2 i 5, lista osobe 5 sadrži 4, 2 i 3, dok kod 6 ostaje samo 1.
+\newline
+Redukovane liste preferencija nakon prve faze možemo videti na slici \ref{red}.
+Pošto još uvek postoje liste preferencija koje imaju više od jednog elementa, prelazimo na drugu fazu. Za to nam je potrebno da generišemo sve ili ništa ciklus.
+Uzećemo recimo da je početna osoba 2, tj $p_1 = 2$. Na osnovu već opisane procedure, $q_1$ dobijamo kao drugu osobu iz liste p1, tako da je $q_1 = 5$. Sada nam treba $p_2$, nju nalazimo kao poslednju osobu u listi od $q_1$, dakle $p_2 = 3$. Analogno ovome dobijamo, $q_2 = 2, p_3 = 4, q_3 = 5, p_4 = 3$. U ovom trenutku osoba 3 se javila dva puta, pa je sekvenca formirala ciklus, i naš traženi ciklus je 3, 4. Kao što je opisano ranije u tekstu, svaka osoba iz ciklusa biva odbijena od prve osobe u svojoj redukovanoj listi preferencija, i time je primorana da šalje predlog sledećoj osobi. Samim tim, 3 je odbijena od strane 5, i šalje predlog osobi broj 2, pa 5 može biti uklonjena iz liste, pa ostaje samo 2. Dalje, pošto je sada favorit od 2 osoba broj 3, sve nakon nje mogu biti uklonjene, pa tako brišemo 5 i 4, i u listi osobe 2 ostaje samo 3.
+\newline
+Isto ovo primenjujemo i za osobu 4, koja je sledeća u ciklusu, i kao rezultat iz njene liste uklanjamo 2, te ostaje samo 5, a iz liste osobe 5 uklanjamo sve nakon 4, tj. 2 i 3, pa ostaje samo 4. Ovim su sve liste preferencija svedene na 1 element, što znači da je uparivanje pronađeno, i svakoj osobi je dodeljena jedina preostala u njenoj listi. Traženo uparivanje je $1 - 6, 2 - 3, 4 - 5$.
+\newline
+U opštem slučaju, redukcija faze 2 će možda morati da se primeni više puta, ali je ovde kriterijum zaustavljanja zadovoljen nakon jedne primene.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{redukovana.png}
+    \caption{Redukovane liste preferencija.}
+    \label{red}
+\end{figure}
+
+\newpage
 \section{Implementacija}
 Algoritam je implementiran u programskom jeziku C++, a kako bi korišćenje bilo olakšano, integrisan je u aplikaciju napravljenu pomoću QtCreator-a. U ovom poglavlju biće opisane samo najbitnije funkcije za rad algoritma, dok će opisivanje integracije algoritma u Qt aplikaciju biti zanemareno.
 \newline
@@ -198,7 +236,7 @@ Za opisivanje matrice preferencija, koju zovemo \textit{preferences} koristimo \
 \section{Složenost}
 Analiziraćemo posebno složenost prve i druge faze.
 \subsection{Prva faza}
-Prva faza nam se zasniva na pozivanjima funkcije \textbf{do\_proposals}. Kako ona uvek nastavlja izvršavanje od mesta na kom je zaustavljeno slanje predloga u nekom prošlom pozivu, i nikad se ne vraća unazad, najgori slučaj je da je neko odbijen od strane svih ostalih, a ostali su stigli da pretposlednje osobe u svojim listama preferencija. Znači da je ovo reda veličine matrice, a kako su ostale operacije složenosti $O(1)$, znači da je složenost ove faze algoritma reda $O(n^2)$.
+Prva faza nam se zasniva na pozivanjima funkcije \textbf{do\_proposals}. Kako ona uvek nastavlja izvršavanje od mesta na kom je zaustavljeno slanje predloga u nekom prošlom pozivu, i nikad se ne vraća unazad kroz liste preferencija, najgori slučaj je da je neko odbijen od strane svih ostalih, a ostali su stigli da pretposlednje osobe u svojim listama preferencija. Znači da je ovo reda veličine matrice, a kako su ostale operacije složenosti $O(1)$, znači da je složenost ove faze algoritma reda $O(n^2)$.
 \subsection{Druga faza}
 Druga faza se sastoji od generisanja sve ili ništa ciklusa, i redukcije liste preferencija na ranije opisani način, dok neki kriterijum zaustavljanja ne bude zadovoljen. Proveru uslova vršimo uz pomoć tehnike 2 pokazivača, održavajući 2 vektora, \textit{leftmost} i \textit{rightmost}, koji pokazuju na najlevlji i najdešnji element u listi preferencija svake osobe. Ovako je provera veličine liste preferencija neke osobe, odnosno zadovoljenja nekog uslova zaustavljanja, složenosti $O(1)$. Nakon svake redukcije druge faze ažuriramo na odgovarajući način ova dva vektora. Kako je, hipotetički, maksimalan broj elemenata koji mogu biti izbačeni tokom druge faze $n^2$, a složenost ostalih operacija, i generisanja ciklusa $O(1)$, sledi da je maksimalan broj koraka reda $O(n^2)$, samim tim je i složenost celog algoritma $O(n^2)$.
 
